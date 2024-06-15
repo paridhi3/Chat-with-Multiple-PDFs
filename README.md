@@ -32,4 +32,4 @@ Chat with Multiple PDFs is a Streamlit application that enables users to interac
   
 5. Google Gemini Pro
   
-6. FAISS
+6. FAISS(Facebook AI Similarity Search)
