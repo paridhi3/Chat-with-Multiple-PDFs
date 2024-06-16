@@ -64,13 +64,27 @@ def user_input(user_question):
         {"input_documents":docs, "question": user_question}
         , return_only_outputs=True)
 
-    print(response)
+    # Extract the output text from the response
+    answer = response["output_text"]
+
     st.subheader("Answer: ")
-    st.write(response["output_text"])
+    st.write(answer)
+
+    # Append user input and response to chat history
+    st.session_state['chat_history'].append(("You", user_question))
+    st.session_state['chat_history'].append(("BOT", answer))
 
 def main():
     st.set_page_config("Chat with PDF")
     st.header("Chat with Multiple PDFs")
+
+    # Initialize session state for chat history if it doesn't exist
+    if 'chat_history' not in st.session_state:
+        st.session_state['chat_history'] = []
+
+    # Initialize session state for chat history visibility if it doesn't exist
+    if 'show_chat_history' not in st.session_state:
+        st.session_state['show_chat_history'] = False
 
     user_question = st.text_input("Ask a question from the PDF files")
 
@@ -86,6 +100,19 @@ def main():
                 text_chunks = get_text_chunks(raw_text)
                 get_vector_store(text_chunks)
                 st.success("Done! Feel free to ask your questions now.")
+
+    # Button to toggle chat history visibility
+    if st.button("Show Chat History"):
+        if not st.session_state['chat_history']:
+            st.write("No chat history yet.")
+        else:
+            st.session_state['show_chat_history'] = not st.session_state['show_chat_history']
+
+    # Only display chat history if the button has been toggled to show
+    if st.session_state['show_chat_history'] and st.session_state['chat_history']:
+        st.subheader("Chat History:")
+        for role, text in st.session_state['chat_history']:
+            st.write(f"{role}: {text}")
 
 if __name__ == "__main__":
     main()
