@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Chat with Multiple PDFs
 
 Chat with Multiple PDFs is a Streamlit application that enables users to interactively ask questions based on the content of multiple PDF files. It utilizes various natural language processing and generative AI techniques to provide accurate answers to user queries.
@@ -39,3 +40,4 @@ Chat with Multiple PDFs is a Streamlit application that enables users to interac
 5. Google Gemini Pro
 
 6. FAISS
+
